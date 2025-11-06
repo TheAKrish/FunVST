@@ -1,0 +1,16 @@
+# FunVST Project .gitignore
+
+# JUCE framework (clone separately)
+JUCE/
+
+# Build artifacts
+build/
+Build/
+Builds/
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
