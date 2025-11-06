@@ -39,6 +39,7 @@ A simple but fully functional audio plugin built with JUCE framework that loads 
 
 ### macOS (Recommended)
 - **macOS**: 10.13 (High Sierra) or later
+- **Git**: For cloning repository and JUCE framework
 - **Xcode**: Version 12.0 or later
 - **Xcode Command Line Tools**: Required
 - **Homebrew**: Package manager for macOS
@@ -69,6 +70,7 @@ A simple but fully functional audio plugin built with JUCE framework that loads 
 
 4. **Verify installations:**
    ```bash
+   git --version            # Should show Git version
    xcode-select -p          # Should show Xcode path
    brew --version           # Should show Homebrew version
    cmake --version          # Should show CMake 3.15+
@@ -76,15 +78,48 @@ A simple but fully functional audio plugin built with JUCE framework that loads 
 
 ### Step 2: Get the Source Code
 
-The project is already set up with JUCE included. Navigate to the project directory:
+**2.1 Clone the repository:**
 
 ```bash
-cd /path/to/FunVST
+cd ~/Documents  # or your preferred location
+git clone https://github.com/TheAKrish/FunVST.git
+cd FunVST
+```
+
+**2.2 Install JUCE Framework:**
+
+The JUCE framework is required but not included in the repository. Clone it into the project directory:
+
+```bash
+git clone --depth 1 --branch 7.0.12 https://github.com/juce-framework/JUCE.git
+```
+
+**Note**: JUCE is approximately 500MB and may take a few minutes to download.
+
+**2.3 Verify both are present:**
+
+```bash
 ls -la
 # You should see: JUCE/ SimpleSampler/ LICENSE
 ```
 
-### Step 3: Configure the Build
+### Step 3: Build the Plugin
+
+**Quick Option: Using the Build Script (Recommended for Beginners)**
+
+For convenience, use the automated build script that handles all build steps:
+
+```bash
+cd SimpleSampler
+chmod +x build.sh
+./build.sh
+```
+
+This script will automatically configure, build, and show installation status.
+
+**Manual Option: Step-by-Step Build**
+
+If you prefer to build manually or need more control:
 
 1. **Create a build directory:**
    ```bash
@@ -103,22 +138,22 @@ ls -la
    cmake .. -DCMAKE_BUILD_TYPE=Release
    ```
 
-### Step 4: Build the Plugin
+3. **Build the plugin:**
 
-**Option A: Using Xcode (GUI)**
-```bash
-open SimpleSampler.xcodeproj
-# Then in Xcode: Product > Build (⌘B)
-```
+   **Using Xcode (GUI):**
+   ```bash
+   open SimpleSampler.xcodeproj
+   # Then in Xcode: Product > Build (⌘B)
+   ```
 
-**Option B: Using CMake (Command Line)**
-```bash
-cmake --build . --config Release
-```
+   **Using CMake (Command Line):**
+   ```bash
+   cmake --build . --config Release
+   ```
 
 Build time: ~2-5 minutes depending on your system.
 
-### Step 5: Install the Plugin
+### Step 4: Install the Plugin
 
 The plugin is automatically copied to the correct locations if `COPY_PLUGIN_AFTER_BUILD` is enabled in CMakeLists.txt (default: ON).
 
@@ -142,7 +177,7 @@ The plugin is automatically copied to the correct locations if `COPY_PLUGIN_AFTE
    ls ~/Library/Audio/Plug-Ins/Components/
    ```
 
-### Step 6: Validate the Plugin (Optional but Recommended)
+### Step 5: Validate the Plugin (Optional but Recommended)
 
 **For AU plugins:**
 ```bash
